@@ -1,0 +1,9 @@
+<h1>Listing wits</h1>
+
+<% @wits.each do |wit| %>
+  <%= link_to(wit.content, wit) %> [<%= wit.favorites %>] , <%= format_date(wit.created_at) %> - 
+  <%= link_to("Edit", edit_wit_path(wit)) %>
+  <%= link_to("Delete", wit_path(wit), method: :delete)%></br>
+<% end %>
+</br>
+  <%= link_to("Add", new_wit_path)%>
