@@ -1,6 +1,8 @@
 class WitsController < ApplicationController
   before_filter(:load_wit, only: [:edit, :update, :show, :destroy])
   
+  before_action :authenticate_user!
+
   def index
     @wits = Wit.all
   end
