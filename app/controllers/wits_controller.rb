@@ -12,13 +12,16 @@ class WitsController < ApplicationController
   end
 
   def create
-    @wit = Wit.create(content: params[:wit][:content])
+    @wit = Wit.create(content: params[:wit][:content], user: current_user)
     redirect_to(wits_path)
   end
 
   def update
-    @wit.update(content: params[:wit][:content])
-    redirect_to(wits_path)
+    if @wit.user == current_user
+      @wit.update(content: params[:wit][:content])
+      redirect_to(wits_path)
+    else
+      raise "You are not authorized to perform this action!"
   end
 
   def edit
@@ -28,8 +31,11 @@ class WitsController < ApplicationController
   end
 
   def destroy
-    @wit.delete
-    redirect_to(wits_path)
+    if @wit.user == current_user
+      @wit.destroy
+      redirect_to(wits_path)
+    else
+      raise "You are not authorized to perform this action!"
   end
 
   private
